@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo/screens/settings.dart';
+import 'package:todo/screens/widgets/show_floating_bottom.dart';
 import 'package:todo/screens/tasks.dart';
 
 class HomeLayout extends StatefulWidget {
@@ -50,10 +51,17 @@ class _HomeLayoutState extends State<HomeLayout> {
             ]),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
+        onPressed: () {
+        showFloatingbottom();
+        },
+        child: Icon(Icons.add,color: Colors.white,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
+  }
+  showFloatingbottom(){
+    showModalBottomSheet(context: context, builder: (context) {
+      return ShowFloatingBottom();
+    },);
   }
 }
