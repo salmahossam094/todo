@@ -17,17 +17,21 @@ class _HomeLayoutState extends State<HomeLayout> {
   Widget build(BuildContext context) {
     List<Widget> tabs = [TasksTab(), SettingsTab()];
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
-        title: Text(
-          'To Do List',
-          style: Theme.of(context).textTheme.bodyLarge,
+        title: Align(
+          alignment: Alignment.topLeft,
+          child: Text(
+            'To Do List',
+            style: Theme.of(context).textTheme.bodyLarge,
+          ),
         ),
       ),
       body: tabs[index],
       bottomNavigationBar: BottomAppBar(
         padding: EdgeInsets.all(4),
         shape: CircularNotchedRectangle(),
-        notchMargin: 5,
+        notchMargin: 10,
         child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: index,
@@ -51,15 +55,16 @@ class _HomeLayoutState extends State<HomeLayout> {
             ]),
       ),
       floatingActionButton: FloatingActionButton(
+        shape: StadiumBorder(side: BorderSide(color: Colors.white,width: 3)),
         onPressed: () {
-        showFloatingbottom();
+        showFloatingBottom();
         },
         child: Icon(Icons.add,color: Colors.white,),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-  showFloatingbottom(){
+  showFloatingBottom(){
     showModalBottomSheet(context: context, builder: (context) {
       return ShowFloatingBottom();
     },);
