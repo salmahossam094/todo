@@ -7,7 +7,7 @@ class AppStyles {
       fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white);
 
   static TextStyle poppins22Dark() => GoogleFonts.poppins(
-      fontSize: 22, fontWeight: FontWeight.bold, color: AppColor.darkColor);
+      fontSize: 22, fontWeight: FontWeight.bold, color: AppColor.darkBlueColor);
 
   static TextStyle poppins18Light() => GoogleFonts.poppins(
       fontSize: 18, fontWeight: FontWeight.bold, color: AppColor.lightColor);

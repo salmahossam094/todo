@@ -1,9 +1,19 @@
 {
+  "appTitle": "To Do List",
+  "settings": "Settings",
   "english": "English",
   "arabic": "Arabic",
   "theming": "Theming",
   "language": "Language",
   "light": "Light",
   "dark": "Dark",
-  "system": "System Default"
+  "system": "System Default",
+  "addNew": "Add New Task",
+  "addTask": "Add Task",
+  "selectDate": "Select Date",
+  "taskDescrip": "Task Description",
+  "taskTitle": "Task Title",
+  "error1": "Please,Enter Task Title",
+  "error2": "Please, Enter at least 10 char",
+  "error3": "Please, Enter Task Description"
 }

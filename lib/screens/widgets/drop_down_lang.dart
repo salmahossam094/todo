@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/providers/my_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
 class CustomDropDownLanguage extends StatefulWidget {
@@ -16,12 +16,12 @@ class _CustomDropDownLanguageState extends State<CustomDropDownLanguage> {
   Widget build(BuildContext context) {
     var pro = Provider.of<MyProvider>(context);
     return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
+      margin: const EdgeInsets.all(5),
+      padding: const EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
       decoration: BoxDecoration(border: Border.all(color: AppColor.lightColor)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
-          value: selectedValue,
+          value: pro.language == 'en' ? selectedValue = 1 : selectedValue = 2,
           isExpanded: true,
           iconSize: 30,
           iconEnabledColor: AppColor.lightColor,

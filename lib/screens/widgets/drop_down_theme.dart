@@ -16,17 +16,23 @@ class _CustomDropDownThemeState extends State<CustomDropDownTheme> {
   Widget build(BuildContext context) {
     var pro = Provider.of<MyProvider>(context);
     return Container(
-      margin: EdgeInsets.all(5),
-      padding: EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
+      margin: const EdgeInsets.all(5),
+      padding: const EdgeInsets.only(bottom: 4, top: 4, left: 10, right: 10),
       decoration: BoxDecoration(border: Border.all(color: AppColor.lightColor)),
       child: DropdownButtonHideUnderline(
         child: DropdownButton(
           iconSize: 30,
-          value: selectedValue,
+          value: pro.theme == ThemeMode.light
+              ? selectedValue = 1
+              : selectedValue = 2,
           iconEnabledColor: AppColor.lightColor,
           isExpanded: true,
           items: [
             DropdownMenuItem(
+              value: 1,
+              onTap: () {
+                pro.changeTheme(ThemeMode.light);
+              },
               child: Text(
                 AppLocalizations.of(context)!.light,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -34,12 +40,12 @@ class _CustomDropDownThemeState extends State<CustomDropDownTheme> {
                         ? AppColor.lightColor
                         : Colors.white),
               ),
-              value: 1,
-              onTap: () {
-                pro.changeTheme(ThemeMode.light);
-              },
             ),
             DropdownMenuItem(
+              value: 2,
+              onTap: () {
+                pro.changeTheme(ThemeMode.dark);
+              },
               child: Text(
                 AppLocalizations.of(context)!.dark,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -47,10 +53,6 @@ class _CustomDropDownThemeState extends State<CustomDropDownTheme> {
                         ? AppColor.darkColor
                         : Colors.black),
               ),
-              value: 2,
-              onTap: () {
-                pro.changeTheme(ThemeMode.dark);
-              },
             ),
           ],
           onChanged: (value) {

@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/providers/my_provider.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/screens/widgets/drop_down_lang.dart';
 import 'package:todo/screens/widgets/drop_down_theme.dart';
-
 
 class SettingsTab extends StatefulWidget {
   @override
@@ -51,6 +50,4 @@ class _SettingsTabState extends State<SettingsTab> {
       ),
     );
   }
-
-
 }

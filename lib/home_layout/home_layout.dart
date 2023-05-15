@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo/screens/settings.dart';
-import 'package:todo/screens/widgets/show_floating_bottom.dart';
 import 'package:todo/screens/tasks.dart';
+import 'package:todo/screens/widgets/show_floating_bottom.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = 'HomeLayout';
@@ -19,18 +20,17 @@ class _HomeLayoutState extends State<HomeLayout> {
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
-        title: Align(
-          alignment: Alignment.topLeft,
-          child: Text(
-            'To Do List',
-            style: Theme.of(context).textTheme.bodyLarge,
-          ),
+        title: Text(
+          index == 1
+              ? AppLocalizations.of(context)!.settings
+              : AppLocalizations.of(context)!.appTitle,
+          style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
       body: tabs[index],
       bottomNavigationBar: BottomAppBar(
-        padding: EdgeInsets.all(4),
-        shape: CircularNotchedRectangle(),
+        padding: const EdgeInsets.all(4),
+        shape: const CircularNotchedRectangle(),
         notchMargin: 10,
         child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
@@ -55,18 +55,31 @@ class _HomeLayoutState extends State<HomeLayout> {
             ]),
       ),
       floatingActionButton: FloatingActionButton(
-        shape: StadiumBorder(side: BorderSide(color: Colors.white,width: 3)),
+        shape: const StadiumBorder(
+            side: BorderSide(color: Colors.white, width: 3)),
         onPressed: () {
-        showFloatingBottom();
+          showFloatingBottom();
         },
-        child: Icon(Icons.add,color: Colors.white,),
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
-  showFloatingBottom(){
-    showModalBottomSheet(context: context, builder: (context) {
-      return ShowFloatingBottom();
-    },);
+
+  showFloatingBottom() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: const ShowFloatingBottom(),
+        );
+      },
+    );
   }
 }
