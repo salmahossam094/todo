@@ -14,14 +14,15 @@ class TasksTab extends StatefulWidget {
 
 class _TasksTabState extends State<TasksTab> {
   DateTime date = DateTime.now();
+
   @override
   Widget build(BuildContext context) {
-
     var pro = Provider.of<MyProvider>(context);
     return Column(
       children: [
         DatePicker(
           DateTime.now(),
+          inactiveDates: [DateTime.now().add(Duration(days: 1))],
           initialSelectedDate: DateTime.now(),
           selectionColor: AppColor.lightColor,
           selectedTextColor: Colors.white,
