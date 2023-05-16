@@ -22,12 +22,22 @@ class _TasksTabState extends State<TasksTab> {
       children: [
         DatePicker(
           DateTime.now(),
-          inactiveDates: [DateTime.now().add(Duration(days: 1))],
+          inactiveDates: [DateTime.now().add(const Duration(days: 1))],
           initialSelectedDate: DateTime.now(),
           selectionColor: AppColor.lightColor,
           selectedTextColor: Colors.white,
+          deactivatedColor: Colors.grey,
           height: 96,
           locale: pro.language,
+          monthTextStyle: pro.theme == ThemeMode.dark
+              ? const TextStyle(color: Colors.white, fontSize: 15)
+              : const TextStyle(color: AppColor.lightColor, fontSize: 15),
+          dateTextStyle: pro.theme == ThemeMode.dark
+              ? const TextStyle(color: Colors.white, fontSize: 15)
+              : const TextStyle(color: AppColor.lightColor, fontSize: 15),
+          dayTextStyle: pro.theme == ThemeMode.dark
+              ? const TextStyle(color: Colors.white, fontSize: 15)
+              : const TextStyle(color:AppColor.lightColor, fontSize: 15),
           onDateChange: (newDate) {
             // New date selected
             setState(() {
@@ -38,7 +48,7 @@ class _TasksTabState extends State<TasksTab> {
         Expanded(
             child: ListView.builder(
           itemBuilder: (context, index) {
-            return TaskItem();
+            return const TaskItem();
           },
           itemCount: 5,
         ))
