@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:todo/model/task_model.dart';
+import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
-class TaskItem extends StatefulWidget {
-  const TaskItem({Key? key}) : super(key: key);
+class TaskItem extends StatelessWidget {
+  TaskModel task;
 
-  @override
-  State<TaskItem> createState() => _TaskItemState();
-}
+  TaskItem(this.task);
 
-class _TaskItemState extends State<TaskItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -30,7 +29,9 @@ class _TaskItemState extends State<TaskItem> {
           motion: DrawerMotion(),
           children: [
             SlidableAction(
-              onPressed: (context) {},
+              onPressed: (context) {
+                FireBaseFunctions.deleteTask(task.id);
+              },
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(35),
               backgroundColor: Colors.red,
@@ -49,44 +50,64 @@ class _TaskItemState extends State<TaskItem> {
                 height: 100,
                 width: 5,
                 decoration: BoxDecoration(
-                    color: AppColor.lightColor,
+                    color:
+                        task.status ? AppColor.greenColor : AppColor.lightColor,
                     borderRadius: BorderRadius.circular(4)),
                 margin: const EdgeInsets.only(
                     top: 6, bottom: 6, left: 20, right: 20),
               ),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * 0.05,
-              ),
+              // SizedBox(
+              //   width: MediaQuery.of(context).size.width * 0.05,
+              // ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Task Title',
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(color: AppColor.lightColor),
+                    task.title,
+                    style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                        color: task.status
+                            ? AppColor.greenColor
+                            : AppColor.lightColor),
                   ),
                   Text(
-                    'Task Description',
+                    task.des,
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 ],
               ),
               const Spacer(),
-              Container(
-                  margin: const EdgeInsets.only(right: 16, left: 16),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 3),
-                  decoration: BoxDecoration(
-                    color: AppColor.lightColor,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: const Icon(
-                    Icons.done,
-                    color: Colors.white,
-                    size: 30,
-                  ))
+              task.status
+                  ? Container(
+                      margin: const EdgeInsets.only(right: 14, left: 16),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 3),
+                      child: Text(
+                        "Done !",
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyLarge
+                            ?.copyWith(color: AppColor.greenColor),
+                      ),
+                    )
+                  : InkWell(
+                      onTap: () {
+                        task.status = true;
+                        FireBaseFunctions.updateTask(task.id, task);
+                      },
+                      child: Container(
+                          margin: const EdgeInsets.only(right: 16, left: 16),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 3),
+                          decoration: BoxDecoration(
+                            color: AppColor.lightColor,
+                            borderRadius: BorderRadius.circular(12),
+                          ),
+                          child: const Icon(
+                            Icons.done,
+                            color: Colors.white,
+                            size: 30,
+                          )),
+                    )
             ],
           ),
         ),

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
+import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
 class ShowFloatingBottom extends StatefulWidget {
@@ -13,7 +15,9 @@ class ShowFloatingBottom extends StatefulWidget {
 
 class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
   var formKey = GlobalKey<FormState>();
-  String date = "12/12/2012";
+  DateTime date = DateUtils.dateOnly(DateTime.now());
+  var titleController = TextEditingController();
+  var desController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,6 +41,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                 height: 10,
               ),
               TextFormField(
+                controller: titleController,
                 validator: (value) {
                   if (value!.isEmpty || value == null) {
                     return AppLocalizations.of(context)!.error1;
@@ -70,6 +75,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                 height: 10,
               ),
               TextFormField(
+                controller: desController,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return AppLocalizations.of(context)!.error3;
@@ -119,7 +125,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                   chooseDate();
                 },
                 child: Text(
-                  date,
+                  date.toString().substring(0,10),
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: pro.theme == ThemeMode.light
                           ? AppColor.lightColor
@@ -132,7 +138,16 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    Navigator.pop(context);
+                    TaskModel task = TaskModel(
+                      title: titleController.text,
+                      des: desController.text,
+                      date: date.millisecondsSinceEpoch,
+                      status: false,
+                    );
+                    FireBaseFunctions.addTasksToFire(task).then((value)  {
+                      Navigator.pop(context);
+                    });
+
                   }
                 },
                 child: Text(AppLocalizations.of(context)!.addTask),
@@ -151,7 +166,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
         firstDate: DateTime.now(),
         lastDate: DateTime.now().add(const Duration(days: 365 * 2)));
     if (selected != null) {
-      date = selected.toString().substring(0, 10);
+      date = DateUtils.dateOnly(selected);
     }
     setState(() {});
   }
