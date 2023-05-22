@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:todo/model/task_model.dart';
+import 'package:todo/screens/edit_screen.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
@@ -17,7 +18,9 @@ class TaskItem extends StatelessWidget {
         endActionPane:
             ActionPane(extentRatio: 0.35, motion: DrawerMotion(), children: [
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) {
+              Navigator.pushNamed(context, EditScreen.routeName,arguments: task);
+            },
             icon: Icons.edit,
             borderRadius: BorderRadius.circular(35),
             backgroundColor: AppColor.lightColor,

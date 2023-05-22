@@ -45,13 +45,14 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                 validator: (value) {
                   if (value!.isEmpty || value == null) {
                     return AppLocalizations.of(context)!.error1;
-                  } else if (value.length < 10) {
+                  } else if (value.length < 5) {
                     return AppLocalizations.of(context)!.error2;
                   }
                   return null;
                 },
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
+                
                   errorBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),
@@ -60,11 +61,12 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),
                   ),
-                  label: Text(AppLocalizations.of(context)!.taskDescrip),
+                  label: Text(AppLocalizations.of(context)!.taskTitle),
                   focusedBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),
                   ),
+                  prefixIcon: Icon(Icons.title),
                   enabledBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),
@@ -89,6 +91,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),
                   ),
+                  prefixIcon: Icon(Icons.description),
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),

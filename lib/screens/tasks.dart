@@ -45,7 +45,31 @@ class _TasksTabState extends State<TasksTab> {
             }
             List<TaskModel> tasks =
                 snapshot.data?.docs.map((e) => e.data()).toList() ?? [];
-            if (snapshot.hasData){
+            if (tasks.isEmpty) {
+              return SizedBox(
+                width: double.infinity,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.6,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.list),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text("Not tasks yet")
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              );
+            }
+            if (snapshot.hasData) {
               return Expanded(
                 child: ListView.builder(
                   itemBuilder: (context, index) {

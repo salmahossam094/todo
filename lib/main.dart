@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/home_layout/home_layout.dart';
+import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
+import 'package:todo/screens/edit_screen.dart';
 import 'package:todo/shared/styles/my_theme.dart';
 
 void main() async {
@@ -27,6 +29,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     provider = Provider.of<MyProvider>(context);
     initSharedPref();
+
     return MaterialApp(
       localizationsDelegates: const [
         AppLocalizations.delegate,
@@ -43,6 +46,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeLayout.routeName,
       routes: {
         HomeLayout.routeName: (context) => HomeLayout(),
+        EditScreen.routeName:(context) => EditScreen(),
       },
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,
