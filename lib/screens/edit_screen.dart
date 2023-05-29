@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class EditScreen extends StatefulWidget {
   static const String routeName = 'Edit-Screen';
@@ -17,7 +17,7 @@ class _EditScreenState extends State<EditScreen> {
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   DateTime date = DateTime.now();
-
+  late TaskModel task;
   @override
   void initState() {
     // Future.delayed(Duration.zero,() {
@@ -27,7 +27,7 @@ class _EditScreenState extends State<EditScreen> {
     //   date=DateTime.fromMillisecondsSinceEpoch(task.date);
     // },);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      var task = ModalRoute.of(context)!.settings.arguments as TaskModel;
+       task = ModalRoute.of(context)!.settings.arguments as TaskModel;
       titleController.text = task.title;
       descriptionController.text = task.des;
       date = DateTime.fromMillisecondsSinceEpoch(task.date);
@@ -38,12 +38,12 @@ class _EditScreenState extends State<EditScreen> {
   @override
   Widget build(BuildContext context) {
     var task = ModalRoute.of(context)!.settings.arguments as TaskModel;
-    var pro =Provider.of<MyProvider>(context);
+    var pro = Provider.of<MyProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'update task',
+          AppLocalizations.of(context)!.updateAppBar,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
       ),
@@ -59,19 +59,19 @@ class _EditScreenState extends State<EditScreen> {
               child: Column(
                 children: [
                   Text(
-                    'Edit Task',
+                    AppLocalizations.of(context)!.editTask,
                     style: Theme.of(context)
                         .textTheme
                         .bodyMedium!
                         .copyWith(color: Colors.black),
                   ),
-                  Divider(
+                  const Divider(
                     thickness: 3,
                     color: AppColor.lightColor,
                     indent: 20,
                     endIndent: 20,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
@@ -79,7 +79,7 @@ class _EditScreenState extends State<EditScreen> {
                     enabled: true,
                     controller: titleController,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.title),
+                      prefixIcon: const Icon(Icons.title),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: AppColor.lightColor),
@@ -93,42 +93,42 @@ class _EditScreenState extends State<EditScreen> {
                       label: Text(AppLocalizations.of(context)!.taskTitle),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
                     maxLines: 3,
                     decoration: InputDecoration(
-
-                      prefixIcon: Icon(Icons.description),
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                        const BorderSide(color: AppColor.lightColor),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                        const BorderSide(color: AppColor.lightColor),
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      label: Text(AppLocalizations.of(context)!.taskDescrip)
-                    ),
+                        prefixIcon: const Icon(Icons.description),
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: AppColor.lightColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              const BorderSide(color: AppColor.lightColor),
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        label: Text(AppLocalizations.of(context)!.taskDescrip)),
                     controller: descriptionController,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 30,
                   ),
                   Align(
-                    alignment: pro.language=='en'?Alignment.topLeft:Alignment.topRight,
+                    alignment: pro.language == 'en'
+                        ? Alignment.topLeft
+                        : Alignment.topRight,
                     child: Text(
-                   AppLocalizations.of(context)!.selectDate,
+                      AppLocalizations.of(context)!.selectDate,
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium!
                           .copyWith(color: Colors.black),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   InkWell(
@@ -138,7 +138,7 @@ class _EditScreenState extends State<EditScreen> {
                     },
                     child: Text(date.toString().substring(0, 10)),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   ElevatedButton(
@@ -149,7 +149,7 @@ class _EditScreenState extends State<EditScreen> {
                         FireBaseFunctions.updateTask(task.id, task);
                         Navigator.pop(context);
                       },
-                      child: Text('       '))
+                      child: Text(AppLocalizations.of(context)!.save))
                 ],
               ),
             ),

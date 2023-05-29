@@ -6,17 +6,19 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo/firebase_options.dart';
 import 'package:todo/home_layout/home_layout.dart';
-import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
 import 'package:todo/screens/edit_screen.dart';
+import 'package:todo/screens/login_screen.dart';
+import 'package:todo/screens/sign_up1.dart';
+import 'package:todo/screens/signup.dart';
 import 'package:todo/shared/styles/my_theme.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  // FirebaseFirestore.instance.disableNetwork();  ----> // to make app local
   runApp(ChangeNotifierProvider(
       create: (context) => MyProvider(), child: MyApp()));
 }
@@ -43,10 +45,15 @@ class MyApp extends StatelessWidget {
       ],
       locale: Locale(provider.language),
       debugShowCheckedModeBanner: false,
-      initialRoute: HomeLayout.routeName,
+      initialRoute: provider.firebaseUser != null
+          ? HomeLayout.routeName
+          : LoginScreen.routeName,
       routes: {
+        CreateAccount1.routeName:(context) => CreateAccount1(),
         HomeLayout.routeName: (context) => HomeLayout(),
-        EditScreen.routeName:(context) => EditScreen(),
+        EditScreen.routeName: (context) => EditScreen(),
+        LoginScreen.routeName: (context) => LoginScreen(),
+        CreateAccount.routeName: (context) => CreateAccount(),
       },
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,

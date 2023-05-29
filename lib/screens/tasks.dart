@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
-import 'package:todo/screens/task_item.dart';
+import 'package:todo/screens/widgets/task_item.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
@@ -37,6 +37,7 @@ class _TasksTabState extends State<TasksTab> {
           },
           locale: pro.language,
         ),
+        Text("hi ${pro.myUser?.name}"),
         StreamBuilder(
           stream: FireBaseFunctions.getTasksFromFire(date),
           builder: (context, snapshot) {

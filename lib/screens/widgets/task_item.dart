@@ -4,6 +4,8 @@ import 'package:todo/model/task_model.dart';
 import 'package:todo/screens/edit_screen.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class TaskItem extends StatelessWidget {
   TaskModel task;
@@ -19,12 +21,13 @@ class TaskItem extends StatelessWidget {
             ActionPane(extentRatio: 0.35, motion: DrawerMotion(), children: [
           SlidableAction(
             onPressed: (context) {
-              Navigator.pushNamed(context, EditScreen.routeName,arguments: task);
+              Navigator.pushNamed(context, EditScreen.routeName,
+                  arguments: task);
             },
             icon: Icons.edit,
             borderRadius: BorderRadius.circular(35),
             backgroundColor: AppColor.lightColor,
-            label: 'Edit',
+            label: AppLocalizations.of(context)!.edit,
           )
         ]),
         startActionPane: ActionPane(
@@ -38,7 +41,7 @@ class TaskItem extends StatelessWidget {
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(35),
               backgroundColor: Colors.red,
-              label: 'Delete',
+              label: AppLocalizations.of(context)!.delete,
             ),
           ],
         ),
@@ -74,6 +77,8 @@ class TaskItem extends StatelessWidget {
                   ),
                   Text(
                     task.des,
+                    maxLines: 1,
+                    overflow:TextOverflow.fade ,
                     style: Theme.of(context).textTheme.bodySmall,
                   )
                 ],

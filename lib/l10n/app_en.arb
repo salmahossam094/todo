@@ -18,5 +18,7 @@
   "error3": "Please, Enter Task Description",
   "updateAppBar": "Update Task",
   "save": "Save Changes",
-  "editTask": "Edit task"
+  "editTask": "Edit task",
+  "edit": "Edit",
+  "delete": "Delete"
 }

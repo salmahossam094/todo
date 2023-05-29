@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -43,7 +44,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
               TextFormField(
                 controller: titleController,
                 validator: (value) {
-                  if (value!.isEmpty || value == null) {
+                  if (value!.isEmpty) {
                     return AppLocalizations.of(context)!.error1;
                   } else if (value.length < 5) {
                     return AppLocalizations.of(context)!.error2;
@@ -82,6 +83,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                   if (value == null || value.isEmpty) {
                     return AppLocalizations.of(context)!.error3;
                   }
+                  return null;
                 },
                 textInputAction: TextInputAction.done,
                 maxLines: 3,
@@ -142,14 +144,14 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
                     TaskModel task = TaskModel(
+                      userId: FirebaseAuth.instance.currentUser!.uid,
                       title: titleController.text,
                       des: desController.text,
                       date: date.millisecondsSinceEpoch,
                       status: false,
                     );
-                    FireBaseFunctions.addTasksToFire(task).then((value)  {
-                      Navigator.pop(context);
-                    });
+                    FireBaseFunctions.addTasksToFire(task);
+                    Navigator.pop(context);
 
                   }
                 },

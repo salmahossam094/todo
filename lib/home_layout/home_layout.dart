@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/providers/my_provider.dart';
+import 'package:todo/screens/login_screen.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/screens/tasks.dart';
 import 'package:todo/screens/widgets/show_floating_bottom.dart';
@@ -16,6 +19,7 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
+    var pro = Provider.of<MyProvider>(context);
     List<Widget> tabs = [TasksTab(), SettingsTab()];
     return Scaffold(
       extendBody: true,
@@ -26,6 +30,14 @@ class _HomeLayoutState extends State<HomeLayout> {
               : AppLocalizations.of(context)!.appTitle,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
+        actions: [
+          IconButton(
+              onPressed: () {
+                pro.logout();
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
+              icon: Icon(Icons.logout))
+        ],
       ),
       body: tabs[index],
       bottomNavigationBar: BottomAppBar(
