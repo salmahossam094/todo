@@ -24,7 +24,8 @@ class FireBaseFunctions {
 
   static Stream<QuerySnapshot<TaskModel>> getTasksFromFire(DateTime dateTime) {
     var collection = getTasksCollections();
-    return collection.where("userId",isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+    return collection
+        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser?.uid)
         .where("date",
             isEqualTo: DateUtils.dateOnly(dateTime).millisecondsSinceEpoch)
         .snapshots();

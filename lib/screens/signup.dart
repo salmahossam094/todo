@@ -1,5 +1,8 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/home_layout/home_layout.dart';
+import 'package:todo/providers/my_provider.dart';
 import 'package:todo/screens/login_screen.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
@@ -27,6 +30,7 @@ class _CreateAccountState extends State<CreateAccount> {
 
   @override
   Widget build(BuildContext context) {
+    var pro=Provider.of<MyProvider>(context);
     var args = ModalRoute.of(context)!.settings.arguments
         as List<TextEditingController>;
     nameController = args[0];
@@ -109,6 +113,7 @@ class _CreateAccountState extends State<CreateAccount> {
                         }
                         return null;
                       },
+                      style: TextStyle(color:  pro.theme==ThemeMode.light?Colors.black:Colors.black),
                       controller: emailController,
                       decoration: InputDecoration(
                         label: const Text("Email"),
@@ -371,8 +376,18 @@ class _CreateAccountState extends State<CreateAccount> {
                                 int.parse(ageController.text),
                                 emailController.text,
                                 passController.text, () {
-                              Navigator.pushReplacementNamed(
-                                  context, LoginScreen.routeName);
+                              AwesomeDialog(
+                                context: context,
+                                dialogType: DialogType.success,
+                                title: "Successful",
+                                desc: "Sign Up Successful",
+                                dialogBorderRadius:
+                                BorderRadius.circular(20),
+                                dismissOnTouchOutside: false,
+                                btnOkOnPress: () {},
+                              ).show().then((value) =>  Navigator.pushReplacementNamed(
+                                  context, LoginScreen.routeName));
+
                             });
                           }
                         },

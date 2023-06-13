@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:provider/provider.dart';
 import 'package:todo/model/task_model.dart';
+import 'package:todo/providers/my_provider.dart';
 import 'package:todo/screens/edit_screen.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
@@ -14,6 +16,7 @@ class TaskItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var pro=Provider.of<MyProvider>(context);
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Slidable(
@@ -47,6 +50,7 @@ class TaskItem extends StatelessWidget {
         ),
         child: Card(
           elevation: 12,
+          color:  pro.theme==ThemeMode.light?Colors.white:Color(0xFF141922),
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Colors.transparent)),

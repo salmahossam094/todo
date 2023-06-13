@@ -14,10 +14,12 @@ class EditScreen extends StatefulWidget {
 }
 
 class _EditScreenState extends State<EditScreen> {
+
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
   DateTime date = DateTime.now();
   late TaskModel task;
+
   @override
   void initState() {
     // Future.delayed(Duration.zero,() {
@@ -27,7 +29,7 @@ class _EditScreenState extends State<EditScreen> {
     //   date=DateTime.fromMillisecondsSinceEpoch(task.date);
     // },);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-       task = ModalRoute.of(context)!.settings.arguments as TaskModel;
+      task = ModalRoute.of(context)!.settings.arguments as TaskModel;
       titleController.text = task.title;
       descriptionController.text = task.des;
       date = DateTime.fromMillisecondsSinceEpoch(task.date);
@@ -46,11 +48,15 @@ class _EditScreenState extends State<EditScreen> {
           AppLocalizations.of(context)!.updateAppBar,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
+        iconTheme: IconThemeData(
+            color: pro.theme == ThemeMode.light
+                ? Colors.white
+                : AppColor.darkBlueColor),
       ),
       body: Center(
         child: Container(
           height: MediaQuery.of(context).size.height * 0.6,
-          width: MediaQuery.of(context).size.width * .7,
+          width: MediaQuery.of(context).size.width * .75,
           decoration: BoxDecoration(
               color: Colors.white, borderRadius: BorderRadius.circular(20)),
           child: Padding(
@@ -75,11 +81,16 @@ class _EditScreenState extends State<EditScreen> {
                     height: 20,
                   ),
                   TextFormField(
+                    style: TextStyle(
+                        color: pro.theme == ThemeMode.light
+                            ? Colors.black
+                            : Colors.black),
+                    textInputAction: TextInputAction.next,
                     autofocus: true,
                     enabled: true,
                     controller: titleController,
                     decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.title),
+                      prefixIcon:  Icon(Icons.title,color:  pro.theme==ThemeMode.light?AppColor.lightColor:AppColor.darkColor),
                       enabledBorder: OutlineInputBorder(
                         borderSide:
                             const BorderSide(color: AppColor.lightColor),
@@ -90,16 +101,27 @@ class _EditScreenState extends State<EditScreen> {
                             const BorderSide(color: AppColor.lightColor),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      label: Text(AppLocalizations.of(context)!.taskTitle),
+                      label: Text(
+                        AppLocalizations.of(context)!.taskTitle,
+                        style: TextStyle(
+                            color: pro.theme == ThemeMode.light
+                                ? AppColor.lightColor
+                                : AppColor.darkColor),
+                      ),
                     ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
                   TextFormField(
+                    style: TextStyle(
+                        color: pro.theme == ThemeMode.light
+                            ? Colors.black
+                            : Colors.black),
                     maxLines: 3,
+
                     decoration: InputDecoration(
-                        prefixIcon: const Icon(Icons.description),
+                        prefixIcon:  Icon(Icons.description,color:  pro.theme==ThemeMode.light?AppColor.lightColor:AppColor.darkColor),
                         enabledBorder: OutlineInputBorder(
                           borderSide:
                               const BorderSide(color: AppColor.lightColor),
@@ -110,7 +132,13 @@ class _EditScreenState extends State<EditScreen> {
                               const BorderSide(color: AppColor.lightColor),
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        label: Text(AppLocalizations.of(context)!.taskDescrip)),
+                        label: Text(
+                          AppLocalizations.of(context)!.taskDescrip,
+                          style: TextStyle(
+                              color: pro.theme == ThemeMode.light
+                                  ? AppColor.lightColor
+                                  : AppColor.darkColor),
+                        )),
                     controller: descriptionController,
                   ),
                   const SizedBox(

@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:todo/home_layout/home_layout.dart';
 import 'package:todo/providers/my_provider.dart';
 import 'package:todo/screens/sign_up1.dart';
-import 'package:todo/screens/signup.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
@@ -42,11 +41,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Form(
               key: formKey,
               child: Column(
-
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  SizedBox(height: 20,),
-                  Text('To Do App',style: Theme.of(context).textTheme.bodyLarge,),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Text(
+                    'To Do App',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
                   Expanded(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -54,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(
                           validator: (value) {
                             bool emailValid = RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+                                    r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
                                 .hasMatch(value!);
                             if (value.isEmpty) {
                               return 'Please Enter mail';
@@ -68,12 +71,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             label: const Text("Email"),
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                              const BorderSide(color: AppColor.lightColor),
+                                  const BorderSide(color: AppColor.lightColor),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide:
-                              const BorderSide(color: AppColor.lightColor),
+                                  const BorderSide(color: AppColor.lightColor),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             suffixIcon: const Icon(Icons.email),
@@ -85,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         TextFormField(
                           validator: (value) {
                             bool passValid = RegExp(
-                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
+                                    r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$')
                                 .hasMatch(value!);
                             if (value.isEmpty) {
                               return 'Please, Enter password';
@@ -99,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             label: const Text("Password"),
                             suffixIcon: IconButton(
-                              icon: const Icon(Icons.remove_red_eye),
+                              icon: showPass? Icon(Icons.visibility):Icon(Icons.visibility_off),
                               onPressed: () {
                                 showPass = !showPass;
                                 setState(() {});
@@ -107,12 +110,12 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderSide:
-                              const BorderSide(color: AppColor.lightColor),
+                                  const BorderSide(color: AppColor.lightColor),
                               borderRadius: BorderRadius.circular(20),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderSide:
-                              const BorderSide(color: AppColor.lightColor),
+                                  const BorderSide(color: AppColor.lightColor),
                               borderRadius: BorderRadius.circular(20),
                             ),
                           ),
@@ -125,34 +128,37 @@ class _LoginScreenState extends State<LoginScreen> {
                               if (formKey.currentState!.validate()) {
                                 FireBaseFunctions.login(
                                     emailController.text, passController.text,
-                                        (value) {
-                                      AwesomeDialog(
-                                        context: context,
-                                        dialogType: DialogType.error,
-                                        title: "Error",
-                                        desc:
+                                    (value) {
+                                  AwesomeDialog(
+                                    dismissOnTouchOutside: false,
+                                    context: context,
+                                    dialogType: DialogType.error,
+                                    title: "Error",
+                                    desc:
                                         "The email address or password you entered is invalid",
-                                        dialogBorderRadius:
+                                    dialogBorderRadius:
                                         BorderRadius.circular(20),
-                                        btnCancelOnPress: () {},
-                                        btnOkOnPress: () {},
-                                      ).show();
-                                      setState(() {});
-                                    }, () {
+
+                                    btnOkOnPress: () {},
+                                  ).show();
+                                  setState(() {});
+                                }, () {
                                   AwesomeDialog(
                                     context: context,
                                     dialogType: DialogType.success,
                                     title: "Successful",
                                     desc: "Login Successful",
                                     dialogBorderRadius:
-                                    BorderRadius.circular(20),
-                                 dismissOnTouchOutside: false,
+                                        BorderRadius.circular(20),
+                                    dismissOnTouchOutside: false,
                                     btnOkOnPress: () {},
-                                  ).show().then((value) {
-                                    pro.initUser();
-                                    Navigator.pushReplacementNamed(
-                                        context, HomeLayout.routeName);
-                                  },);
+                                  ).show().then(
+                                    (value) {
+                                      pro.initUser();
+                                      Navigator.pushReplacementNamed(
+                                          context, HomeLayout.routeName);
+                                    },
+                                  );
                                 });
                               }
                             },
@@ -164,14 +170,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       Text(
                         "Don't have an account",
-                        style: Theme
-                            .of(context)
-                            .textTheme
-                            .bodySmall
-                            ?.copyWith(
-                          fontSize: 12,
-                          color: Colors.black,
-                        ),
+                        style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
                       ),
                       TextButton(
                           onPressed: () {

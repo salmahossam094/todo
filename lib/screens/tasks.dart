@@ -1,5 +1,7 @@
 import 'package:date_picker_timeline/date_picker_widget.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
@@ -24,8 +26,18 @@ class _TasksTabState extends State<TasksTab> {
       children: [
         DatePicker(
           DateTime.now(),
+          deactivatedColor: Colors.grey.shade400,
           initialSelectedDate: DateTime.now(),
           selectionColor: AppColor.lightColor,
+          monthTextStyle: TextStyle(
+              color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+              fontSize: 12),
+          dayTextStyle: TextStyle(
+              color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+              fontSize: 12),
+          dateTextStyle: TextStyle(
+              color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+              fontSize: 25),
           height: 100,
           inactiveDates: [DateTime.now().add(Duration(days: 1))],
           selectedTextColor: Colors.white,
@@ -37,7 +49,7 @@ class _TasksTabState extends State<TasksTab> {
           },
           locale: pro.language,
         ),
-        Text("hi ${pro.myUser?.name}"),
+        Text('hi ${pro.myUser?.name}'),
         StreamBuilder(
           stream: FireBaseFunctions.getTasksFromFire(date),
           builder: (context, snapshot) {
@@ -62,7 +74,7 @@ class _TasksTabState extends State<TasksTab> {
                           SizedBox(
                             width: 10,
                           ),
-                          Text("Not tasks yet")
+                          Text(AppLocalizations.of(context)!.noTasks)
                         ],
                       ),
                     )
@@ -70,6 +82,7 @@ class _TasksTabState extends State<TasksTab> {
                 ),
               );
             }
+
             if (snapshot.hasData) {
               return Expanded(
                 child: ListView.builder(

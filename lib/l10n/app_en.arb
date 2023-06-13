@@ -20,5 +20,7 @@
   "save": "Save Changes",
   "editTask": "Edit task",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "noTasks": "Not tasks yet",
+  "hi": "Hello"
 }

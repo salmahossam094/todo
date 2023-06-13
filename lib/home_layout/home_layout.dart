@@ -6,6 +6,7 @@ import 'package:todo/screens/login_screen.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/screens/tasks.dart';
 import 'package:todo/screens/widgets/show_floating_bottom.dart';
+import 'package:todo/shared/styles/app_colors.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = 'HomeLayout';
@@ -20,7 +21,7 @@ class _HomeLayoutState extends State<HomeLayout> {
   @override
   Widget build(BuildContext context) {
     var pro = Provider.of<MyProvider>(context);
-    List<Widget> tabs = [TasksTab(), SettingsTab()];
+    List<Widget> tabs = [const TasksTab(), SettingsTab()];
     return Scaffold(
       extendBody: true,
       appBar: AppBar(
@@ -30,13 +31,14 @@ class _HomeLayoutState extends State<HomeLayout> {
               : AppLocalizations.of(context)!.appTitle,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
+
         actions: [
           IconButton(
               onPressed: () {
                 pro.logout();
                 Navigator.pushReplacementNamed(context, LoginScreen.routeName);
               },
-              icon: Icon(Icons.logout))
+              icon:  Icon(Icons.logout,color:pro.theme==ThemeMode.light?Colors.white: AppColor.darkColor,))
         ],
       ),
       body: tabs[index],
