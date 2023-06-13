@@ -4,6 +4,8 @@ import 'package:todo/shared/styles/text_styles.dart';
 
 class MyThemeData {
   static ThemeData lightTheme = ThemeData(
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: AppColor.darkColor),
       scaffoldBackgroundColor: AppColor.lightGreenColor,
       primaryColor: AppColor.lightColor,
       brightness: Brightness.light,
@@ -21,5 +23,23 @@ class MyThemeData {
         elevation: 0,
         selectedItemColor: AppColor.lightColor,
       ));
-  static ThemeData darkTheme = ThemeData();
+  static ThemeData darkTheme = ThemeData(
+      primaryColor: AppColor.darkColor,
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: AppColor.darkBlueColor,
+      floatingActionButtonTheme: const FloatingActionButtonThemeData(
+          backgroundColor: AppColor.darkColor),
+      appBarTheme: const AppBarTheme(
+          backgroundColor: AppColor.lightColor,
+          centerTitle: false,
+          iconTheme: IconThemeData(color: AppColor.darkColor, size: 30)),
+      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        selectedItemColor: AppColor.lightColor,
+      ),
+      textTheme: TextTheme(
+          bodyLarge: AppStyles.poppins22Dark(),
+          bodyMedium: AppStyles.poppins18LightBlueDark(),
+          bodySmall: AppStyles.roboto12White()));
 }

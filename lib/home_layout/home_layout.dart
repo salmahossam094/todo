@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:provider/provider.dart';
+import 'package:todo/providers/my_provider.dart';
+import 'package:todo/screens/login_screen.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/screens/tasks.dart';
+import 'package:todo/screens/widgets/show_floating_bottom.dart';
+import 'package:todo/shared/styles/app_colors.dart';
 
 class HomeLayout extends StatefulWidget {
   static const String routeName = 'HomeLayout';
@@ -14,19 +20,32 @@ class _HomeLayoutState extends State<HomeLayout> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> tabs = [TasksTab(), SettingsTab()];
+    var pro = Provider.of<MyProvider>(context);
+    List<Widget> tabs = [const TasksTab(), SettingsTab()];
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
         title: Text(
-          'To Do List',
+          index == 1
+              ? AppLocalizations.of(context)!.settings
+              : AppLocalizations.of(context)!.appTitle,
           style: Theme.of(context).textTheme.bodyLarge,
         ),
+
+        actions: [
+          IconButton(
+              onPressed: () {
+                pro.logout();
+                Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+              },
+              icon:  Icon(Icons.logout,color:pro.theme==ThemeMode.light?Colors.white: AppColor.darkColor,))
+        ],
       ),
       body: tabs[index],
       bottomNavigationBar: BottomAppBar(
-        padding: EdgeInsets.all(4),
-        shape: CircularNotchedRectangle(),
-        notchMargin: 5,
+        padding: const EdgeInsets.all(4),
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 10,
         child: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             currentIndex: index,
@@ -50,10 +69,31 @@ class _HomeLayoutState extends State<HomeLayout> {
             ]),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        child: Icon(Icons.add),
+        shape: const StadiumBorder(
+            side: BorderSide(color: Colors.white, width: 3)),
+        onPressed: () {
+          showFloatingBottom();
+        },
+        child: const Icon(
+          Icons.add,
+          color: Colors.white,
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+    );
+  }
+
+  showFloatingBottom() {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (context) {
+        return Padding(
+          padding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          child: const ShowFloatingBottom(),
+        );
+      },
     );
   }
 }
