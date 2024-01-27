@@ -56,30 +56,30 @@ class FireBaseFunctions {
   }
 
   //create account in Authentication
-  static Future<void> createAccount(String name, int age, String email,
-      String password, Function created) async {
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      UserModel userModel = UserModel(
-          name: name, email: email, age: age, id: credential.user!.uid);
-
-      addUserToFirestore(userModel).then((value) {
-        created();
-      });
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
+  // static Future<void> createAccount(String name, int age, String email,
+  //     String password, Function created) async {
+  //   try {
+  //     final credential =
+  //         await FirebaseAuth.instance.createUserWithEmailAndPassword(
+  //       email: email,
+  //       password: password,
+  //     );
+  //     UserModel userModel = UserModel(
+  //         name: name, email: email, age: age, id: credential.user!.uid);
+  //
+  //     addUserToFirestore(userModel).then((value) {
+  //       created();
+  //     });
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'weak-password') {
+  //       print('The password provided is too weak.');
+  //     } else if (e.code == 'email-already-in-use') {
+  //       print('The account already exists for that email.');
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   static Future<UserModel?> readUser(String id) async {
     DocumentSnapshot<UserModel> userSnap =
@@ -87,18 +87,18 @@ class FireBaseFunctions {
     return userSnap.data();
   }
 
-  static Future<void> login(
-      String email, String password, Function onError, Function logged) async {
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password);
-      logged();
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        onError(e.message);
-      } else if (e.code == 'wrong-password') {
-        onError(e.message);
-      }
-    }
-  }
+  // static Future<void> login(
+  //     String email, String password, Function onError, Function logged) async {
+  //   try {
+  //     final credential = await FirebaseAuth.instance
+  //         .signInWithEmailAndPassword(email: email, password: password);
+  //     logged();
+  //   } on FirebaseAuthException catch (e) {
+  //     if (e.code == 'user-not-found') {
+  //       onError(e.message);
+  //     } else if (e.code == 'wrong-password') {
+  //       onError(e.message);
+  //     }
+  //   }
+  // }
 }

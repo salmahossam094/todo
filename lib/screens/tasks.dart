@@ -1,4 +1,4 @@
-import 'package:date_picker_timeline/date_picker_widget.dart';
+// import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,7 +7,7 @@ import 'package:todo/model/task_model.dart';
 import 'package:todo/providers/my_provider.dart';
 import 'package:todo/screens/widgets/task_item.dart';
 import 'package:todo/shared/network/firebase/firebase_functions.dart';
-import 'package:todo/shared/styles/app_colors.dart';
+
 
 class TasksTab extends StatefulWidget {
   const TasksTab({Key? key}) : super(key: key);
@@ -24,31 +24,31 @@ class _TasksTabState extends State<TasksTab> {
     var pro = Provider.of<MyProvider>(context);
     return Column(
       children: [
-        DatePicker(
-          DateTime.now(),
-          deactivatedColor: Colors.grey.shade400,
-          initialSelectedDate: DateTime.now(),
-          selectionColor: AppColor.lightColor,
-          monthTextStyle: TextStyle(
-              color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
-              fontSize: 12),
-          dayTextStyle: TextStyle(
-              color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
-              fontSize: 12),
-          dateTextStyle: TextStyle(
-              color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
-              fontSize: 25),
-          height: 100,
-          inactiveDates: [DateTime.now().add(Duration(days: 1))],
-          selectedTextColor: Colors.white,
-          onDateChange: (newDate) {
-            // New date selected
-            setState(() {
-              date = newDate;
-            });
-          },
-          locale: pro.language,
-        ),
+        // DatePicker(
+        //   DateTime.now(),
+        //   deactivatedColor: Colors.grey.shade400,
+        //   initialSelectedDate: DateTime.now(),
+        //   selectionColor: AppColor.lightColor,
+        //   monthTextStyle: TextStyle(
+        //       color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+        //       fontSize: 12),
+        //   dayTextStyle: TextStyle(
+        //       color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+        //       fontSize: 12),
+        //   dateTextStyle: TextStyle(
+        //       color: pro.theme == ThemeMode.light ? Colors.black : Colors.white,
+        //       fontSize: 25),
+        //   height: 100,
+        //   inactiveDates: [DateTime.now().add(Duration(days: 1))],
+        //   selectedTextColor: Colors.white,
+        //   onDateChange: (newDate) {
+        //     // New date selected
+        //     setState(() {
+        //       date = newDate;
+        //     });
+        //   },
+        //   locale: pro.language,
+        // ),
         Text('hi ${pro.myUser?.name}'),
         StreamBuilder(
           stream: FireBaseFunctions.getTasksFromFire(date),

@@ -53,7 +53,6 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                 },
                 textInputAction: TextInputAction.next,
                 decoration: InputDecoration(
-                
                   errorBorder: OutlineInputBorder(
                     borderSide: const BorderSide(color: AppColor.lightColor),
                     borderRadius: BorderRadius.circular(20),
@@ -130,7 +129,7 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                   chooseDate();
                 },
                 child: Text(
-                  date.toString().substring(0,10),
+                  date.toString().substring(0, 10),
                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                       color: pro.theme == ThemeMode.light
                           ? AppColor.lightColor
@@ -152,7 +151,6 @@ class _ShowFloatingBottomState extends State<ShowFloatingBottom> {
                     );
                     FireBaseFunctions.addTasksToFire(task);
                     Navigator.pop(context);
-
                   }
                 },
                 child: Text(AppLocalizations.of(context)!.addTask),

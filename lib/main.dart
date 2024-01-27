@@ -8,9 +8,10 @@ import 'package:todo/firebase_options.dart';
 import 'package:todo/home_layout/home_layout.dart';
 import 'package:todo/providers/my_provider.dart';
 import 'package:todo/screens/edit_screen.dart';
-import 'package:todo/screens/login_screen.dart';
-import 'package:todo/screens/sign_up1.dart';
-import 'package:todo/screens/signup.dart';
+import 'package:todo/screens/login/login_screen.dart';
+import 'package:todo/screens/signup/sign_up1.dart';
+import 'package:todo/screens/signup/signup.dart';
+
 import 'package:todo/shared/styles/my_theme.dart';
 
 void main() async {
@@ -49,11 +50,12 @@ class MyApp extends StatelessWidget {
           ? HomeLayout.routeName
           : LoginScreen.routeName,
       routes: {
-        CreateAccount1.routeName:(context) => CreateAccount1(),
+
         HomeLayout.routeName: (context) => HomeLayout(),
         EditScreen.routeName: (context) => EditScreen(),
         LoginScreen.routeName: (context) => LoginScreen(),
-        CreateAccount.routeName: (context) => CreateAccount(),
+        CreateAccount1.routeName:(context) => CreateAccount1(),
+        CreateAccount.routeName:(context) => CreateAccount()
       },
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,

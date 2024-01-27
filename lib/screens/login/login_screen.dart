@@ -1,10 +1,12 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todo/base.dart';
 import 'package:todo/home_layout/home_layout.dart';
 import 'package:todo/providers/my_provider.dart';
-import 'package:todo/screens/sign_up1.dart';
-import 'package:todo/shared/network/firebase/firebase_functions.dart';
+import 'package:todo/screens/login/connector.dart';
+import 'package:todo/screens/login/login_viewmodel.dart';
+import 'package:todo/screens/signup/sign_up1.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,15 +17,25 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState extends BaseView<LoginViewModel, LoginScreen>
+    implements LoginConnector {
   bool showPass = true;
   var formKey = GlobalKey<FormState>();
   var emailController = TextEditingController();
   var passController = TextEditingController();
+  LoginViewModel viewModel = LoginViewModel();
+  late MyProvider pro;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    viewModel.connector = this;
+  }
 
   @override
   Widget build(BuildContext context) {
-    var pro = Provider.of<MyProvider>(context);
+    pro = Provider.of<MyProvider>(context);
     return Container(
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -102,7 +114,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             label: const Text("Password"),
                             suffixIcon: IconButton(
-                              icon: showPass? Icon(Icons.visibility):Icon(Icons.visibility_off),
+                              icon: showPass
+                                  ? Icon(Icons.visibility)
+                                  : Icon(Icons.visibility_off),
                               onPressed: () {
                                 showPass = !showPass;
                                 setState(() {});
@@ -126,40 +140,42 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                             onPressed: () {
                               if (formKey.currentState!.validate()) {
-                                FireBaseFunctions.login(
-                                    emailController.text, passController.text,
-                                    (value) {
-                                  AwesomeDialog(
-                                    dismissOnTouchOutside: false,
-                                    context: context,
-                                    dialogType: DialogType.error,
-                                    title: "Error",
-                                    desc:
-                                        "The email address or password you entered is invalid",
-                                    dialogBorderRadius:
-                                        BorderRadius.circular(20),
-
-                                    btnOkOnPress: () {},
-                                  ).show();
-                                  setState(() {});
-                                }, () {
-                                  AwesomeDialog(
-                                    context: context,
-                                    dialogType: DialogType.success,
-                                    title: "Successful",
-                                    desc: "Login Successful",
-                                    dialogBorderRadius:
-                                        BorderRadius.circular(20),
-                                    dismissOnTouchOutside: false,
-                                    btnOkOnPress: () {},
-                                  ).show().then(
-                                    (value) {
-                                      pro.initUser();
-                                      Navigator.pushReplacementNamed(
-                                          context, HomeLayout.routeName);
-                                    },
-                                  );
-                                });
+                                // FireBaseFunctions.login(
+                                //     emailController.text, passController.text,
+                                //     (value) {
+                                //   AwesomeDialog(
+                                //     dismissOnTouchOutside: false,
+                                //     context: context,
+                                //     dialogType: DialogType.error,
+                                //     title: "Error",
+                                //     desc:
+                                //         "The email address or password you entered is invalid",
+                                //     dialogBorderRadius:
+                                //         BorderRadius.circular(20),
+                                //
+                                //     btnOkOnPress: () {},
+                                //   ).show();
+                                //   setState(() {});
+                                // }, () {
+                                //   AwesomeDialog(
+                                //     context: context,
+                                //     dialogType: DialogType.success,
+                                //     title: "Successful",
+                                //     desc: "Login Successful",
+                                //     dialogBorderRadius:
+                                //         BorderRadius.circular(20),
+                                //     dismissOnTouchOutside: false,
+                                //     btnOkOnPress: () {},
+                                  //   ).show().then(
+                                //     (value) {
+                                //       pro.initUser();
+                                //       Navigator.pushReplacementNamed(
+                                //           context, HomeLayout.routeName);
+                                //     },
+                                //   );
+                                // });
+                                viewModel.login(
+                                    emailController.text, passController.text);
                               }
                             },
                             child: const Text('Login')),
@@ -188,5 +204,28 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         ));
+  }
+
+  @override
+  void goToHome() {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      title: "Successful",
+      desc: "Login Successful",
+      dialogBorderRadius: BorderRadius.circular(20),
+      dismissOnTouchOutside: false,
+      btnOkOnPress: () {},
+    ).show().then(
+      (value) {
+        pro.initUser();
+        Navigator.pushReplacementNamed(context, HomeLayout.routeName);
+      },
+    );
+  }
+
+  @override
+  LoginViewModel initViewModel() {
+    return LoginViewModel();
   }
 }

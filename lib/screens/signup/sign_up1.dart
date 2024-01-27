@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo/screens/signup.dart';
+import 'package:todo/screens/signup/signup.dart';
 import 'package:todo/shared/styles/app_colors.dart';
 
 class CreateAccount1 extends StatefulWidget {

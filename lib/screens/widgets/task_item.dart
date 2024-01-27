@@ -21,7 +21,7 @@ class TaskItem extends StatelessWidget {
       padding: const EdgeInsets.all(8.0),
       child: Slidable(
         endActionPane:
-            ActionPane(extentRatio: 0.35, motion: DrawerMotion(), children: [
+            ActionPane(extentRatio: 0.35, motion: const DrawerMotion(), children: [
           SlidableAction(
             onPressed: (context) {
               Navigator.pushNamed(context, EditScreen.routeName,
@@ -35,11 +35,12 @@ class TaskItem extends StatelessWidget {
         ]),
         startActionPane: ActionPane(
           extentRatio: 0.35,
-          motion: DrawerMotion(),
+          motion: const DrawerMotion(),
           children: [
             SlidableAction(
               onPressed: (context) {
                 FireBaseFunctions.deleteTask(task.id);
+
               },
               icon: Icons.delete,
               borderRadius: BorderRadius.circular(35),
@@ -50,7 +51,7 @@ class TaskItem extends StatelessWidget {
         ),
         child: Card(
           elevation: 12,
-          color:  pro.theme==ThemeMode.light?Colors.white:Color(0xFF141922),
+          color:  pro.theme==ThemeMode.light?Colors.white:const Color(0xFF141922),
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12),
               borderSide: const BorderSide(color: Colors.transparent)),

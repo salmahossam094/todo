@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/providers/my_provider.dart';
-import 'package:todo/screens/login_screen.dart';
+import 'package:todo/screens/login/login_screen.dart';
 import 'package:todo/screens/settings.dart';
 import 'package:todo/screens/tasks.dart';
 import 'package:todo/screens/widgets/show_floating_bottom.dart';
